@@ -1,13 +1,16 @@
 import tkinter as tk
 from tkinter import filedialog
+import os
 
 def split_file(input_file, output_file_prefix, chunk_size):
-    with open(input_file, 'r') as f:
+    _, input_file_extension = os.path.splitext(input_file)
+
+    with open(input_file, 'rt', encoding='utf-8') as f:
         lines = f.readlines()
 
     for i in range(0, len(lines), chunk_size):
-        output_file = f"{output_file_prefix} {i + 1}-{i + chunk_size}.txt"
-        with open(output_file, 'w') as f:
+        output_file = f"{output_file_prefix} {i + 1}-{i + chunk_size}{input_file_extension}"
+        with open(output_file, 'wt', encoding='utf-8') as f:
             f.writelines(lines[i:i + chunk_size])
 
 def select_file():
